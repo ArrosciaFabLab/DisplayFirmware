@@ -19,4 +19,7 @@ void pageSetFANSPushCallback( void *ptrEvent );
 // Funzioni che reagiscono agli eventi push sugli oggetti delle pagine
 void butSendCodePushCallBack( void *ptrEvent );
 
+// Funzione che inizializza il display Nextion
+void InitializeDisplay();
+
 #endif

@@ -148,15 +148,16 @@ void butSendCodePushCallBack( void *ptrEvent )
 	}
 }
 
-// Setup inizale di Arduino
-void setup()
+// Funzione che inizializza il display Nextion
+void InitializeDisplay()
 {
-
 	// Inizializzo il display touch Nextion
 	nexInit();
 
 	// Associo tutti gli eventi di callBack (pressione e/o rilascio) su oggetti presenti sulle
 	// pagine del display o sulle pagine stesse e le rispettive funzioni che eseguono le azioni conseguenti
+	
+	// Pagine
 	objSplashPage.attachPush( pageSplashPushCallback );
 	objLoginPage.attachPush( pageLoginPushCallback );
 	objHomePage.attachPush( pageHomePushCallback );
@@ -165,14 +166,15 @@ void setup()
 	objSetScreenPage.attachPush( pageSetScreenPushCallback );
 	objSetLEDStripPage.attachPush( pageSetLEDStripPushCallback );
 	objSetFANSPage.attachPush( pageSetFANSPushCallback );
-
+	
+	// Oggetti
 	objNexButtonSendCode.attachPush( butSendCodePushCallBack );
-
+	
 	// Se è la prima volta che inizializzo lo schermo e mi trovo sulla schermata di Splash screen
 	if( ( nInitialized == 0 ) && ( nCurrentPage == 0 ) )
 	{
 
-		// Imposto la versione attuale del software
+		// Imposto l'attuale versione del firmware
 		char strVersion[ 10 ] =  { 0 };
 		memset( strVersion, 0, sizeof( strVersion ) );
 		strcat( strVersion, SOFTWARE_VERISION );
@@ -184,15 +186,5 @@ void setup()
 		Serial.write( 0xff );
 
 		nInitialized = 1;
-		dbSerialPrintln( "Attuale versione impostata: " + String( strVersion ) );
 	}
 }
-
-// Loop di Arduino
-void loop()
-{
-
-	// Ricevo qualsiasi evento touch (pressione o rilascio) proveniente dal display Nextion
-	nexLoop( objTouchEventList );
-}
-
